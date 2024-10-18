@@ -1,51 +1,91 @@
-/* Copyright (c) 2020 MTHS All rights reserved
+/**
+ * Copyright (c) 2020 MTHS All rights reserved
  *
  * Created by: Benjamin Abebe
- * Created on: Sep 2024
- * This program allows users to play rock,paper, sciscors
-*/
+ * Created on: Oct 2024
+ * This program displays a traffic lights
+ */
 
-let randomNumber: number = 0
-let totalPoint: number = 0
+// variables
+let neopixelStrip: neopixel.Strip = null
+let lightLevel: number = 0
 
-totalPoint = 0
-randomNumber = -1
+// clean up 
 basic.clearScreen()
+neopixelStrip = neopixel.create(DigitalPin.P16, 4, NeoPixelMode.RGB)
+neopixelStrip.setPixelColor(0, neopixel.colors(NeoPixelColors.Black))
+neopixelStrip.setPixelColor(1, neopixel.colors(NeoPixelColors.Black))
+neopixelStrip.setPixelColor(2, neopixel.colors(NeoPixelColors.Black))
+neopixelStrip.setPixelColor(3, neopixel.colors(NeoPixelColors.Black))
+neopixelStrip.show()
 basic.showIcon(IconNames.Happy)
+lightLevel = input.lightLevel()
 
-input.onGesture(Gesture.Shake, function () {
-    randomNumber = randint(0, 2)
-    basic.clearScreen()
-
-    // if the number is 0
-    if (randomNumber == 0) {
-        basic.showIcon(IconNames.SmallSquare)
-        pause(2000)
-        basic.clearScreen()
-        basic.showIcon(IconNames.Happy)
-    }
-
-    // if the number is 1
-    if (randomNumber == 1) {
-        basic.showIcon(IconNames.Square)
-        pause(2000)
-        basic.clearScreen()
-        basic.showIcon(IconNames.Happy)
-    }
-
-    // if the number is 2
-    if (randomNumber == 2) {
-        basic.showIcon(IconNames.Scissors)
-        pause(2000)
-        basic.clearScreen()
-        basic.showIcon(IconNames.Happy)
-    }
-})
-
+// setting function for the button
 input.onButtonPressed(Button.A, function () {
-    totalPoint = totalPoint + 1
-})
 
-input.onButtonPressed(Button.B, function () {
-    basic.showString("total Point is: ", totalPoint)
+    // defining variables and showing happy face
+    basic.showIcon(IconNames.Happy)
+    lightLevel = input.lightLevel()
+
+    neopixelStrip = neopixel.create(DigitalPin.P16, 4, NeoPixelMode.RGB)
+    neopixelStrip.setPixelColor(0, neopixel.colors(NeoPixelColors.Black))
+    neopixelStrip.setPixelColor(1, neopixel.colors(NeoPixelColors.Black))
+    neopixelStrip.setPixelColor(2, neopixel.colors(NeoPixelColors.Black))
+    neopixelStrip.setPixelColor(3, neopixel.colors(NeoPixelColors.Black))
+    neopixelStrip.show()
+
+    // if it is <= 51 light up 0 Neopixels
+    if (lightLevel <= 51) {
+        neopixelStrip.setPixelColor(0, neopixel.colors(NeoPixelColors.Black))
+        neopixelStrip.setPixelColor(1, neopixel.colors(NeoPixelColors.Black))
+        neopixelStrip.setPixelColor(2, neopixel.colors(NeoPixelColors.Black))
+        neopixelStrip.setPixelColor(3, neopixel.colors(NeoPixelColors.Black))
+        neopixelStrip.show()
+        basic.showIcon(IconNames.Happy)
+    }
+
+    // if it is > light up 1 Neopixels
+    if (lightLevel > 52) {
+        neopixelStrip.setPixelColor(0, neopixel.colors(NeoPixelColors.Blue))
+        neopixelStrip.setPixelColor(1, neopixel.colors(NeoPixelColors.Black))
+        neopixelStrip.setPixelColor(2, neopixel.colors(NeoPixelColors.Black))
+        neopixelStrip.setPixelColor(3, neopixel.colors(NeoPixelColors.Black))
+        neopixelStrip.show()
+        basic.showIcon(IconNames.Happy)
+    }
+
+    // if it is > 104 light up 2 Neopixels
+    if (lightLevel > 104) {
+        neopixelStrip.setPixelColor(0, neopixel.colors(NeoPixelColors.Blue))
+        neopixelStrip.setPixelColor(1, neopixel.colors(NeoPixelColors.Blue))
+        neopixelStrip.setPixelColor(2, neopixel.colors(NeoPixelColors.Black))
+        neopixelStrip.setPixelColor(3, neopixel.colors(NeoPixelColors.Black))
+        neopixelStrip.show()
+        basic.showIcon(IconNames.Happy)
+    }
+
+    // if it is > 156 light up 3 Neopixels
+    if (lightLevel > 156) {
+        neopixelStrip.setPixelColor(0, neopixel.colors(NeoPixelColors.Blue))
+        neopixelStrip.setPixelColor(1, neopixel.colors(NeoPixelColors.Blue))
+        neopixelStrip.setPixelColor(2, neopixel.colors(NeoPixelColors.Blue))
+        neopixelStrip.setPixelColor(3, neopixel.colors(NeoPixelColors.Black))
+        neopixelStrip.show()
+        basic.showIcon(IconNames.Happy)
+    }
+
+    if (lightLevel > 208) {
+        neopixelStrip.setPixelColor(0, neopixel.colors(NeoPixelColors.Blue))
+        neopixelStrip.setPixelColor(1, neopixel.colors(NeoPixelColors.Blue))
+        neopixelStrip.setPixelColor(2, neopixel.colors(NeoPixelColors.Blue))
+        neopixelStrip.setPixelColor(3, neopixel.colors(NeoPixelColors.Blue))
+        neopixelStrip.show()
+        basic.showIcon(IconNames.Happy)
+    }
+    pause(2000)
+    neopixelStrip.setPixelColor(0, neopixel.colors(NeoPixelColors.Black))
+    neopixelStrip.setPixelColor(1, neopixel.colors(NeoPixelColors.Black))
+    neopixelStrip.setPixelColor(2, neopixel.colors(NeoPixelColors.Black))
+    neopixelStrip.setPixelColor(3, neopixel.colors(NeoPixelColors.Black))
 })
